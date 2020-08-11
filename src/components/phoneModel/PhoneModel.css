@@ -1,0 +1,27 @@
+.onePhone{
+    float: left;
+    width: 30%;
+    padding-right: 3%;
+    padding-top: 3%;
+}
+
+
+.price{
+    margin: 0;
+    padding: 0;
+    float: left;
+    width: 45%;
+}
+
+.img_phone{
+    clear: both;
+    width: 100%;
+    height: 100%;
+}
+
+.button_buy{
+    width: 55%;
+    border: 0;
+    color:white;
+    background-color: rgb(33, 138, 224);
+}

@@ -1,43 +1,48 @@
-import React, { Component } from 'react';
+import React from 'react';
+import ShopCar from './components/shopCar/ShopCar'
+import Huawei from './components/huawei/Huawei'
+import Iphone from './components/iphone/Iphone'
 import './App.scss';
-import { getDefaultNormalizer } from '@testing-library/react';
 
-class App extends Component {
+class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      data = getData(),
-      shopCount = 0
-    }
-    
-    this.giveUp = ()=>{
-      this.setState({
-        ...this.state, 
-        shopCount: this.state.shopCount -1 
-      })
-    }
-
-    this.buy = ()=>{
-      this.setState({
-        ...this.state, 
-        shopCount: this.state.shopCount +1
-      })
+      data: [],
+      shopCount: 0,
     }
   }
-  getData = ()=>{
-    url = 
-    let data = fetch(url, {
+
+  buy = ()=>{
+    this.setState({ 
+      shopCount: this.state.shopCount +1
+    })
+  }
+  componentDidMount(){
+    this.getData()
+  }
+  async getData(){
+    let url = 'http://localhost:3000/products';
+    const response = await fetch(url, {
       headers: { 'content-type': 'application/json' },
       method: 'Get'
-    }).then(response => response.json());
+    })
+    let result = await response.json();
+    this.setState({ 
+      data: result
+    })
   }
 
   render() {
-    return (
-      <header className="head">
-        <ShopCar id="shopCar" info={this.state.shopCount}/>
-      </header>
-    );
+    return <div>
+      <ShopCar id="shopCar" className="shopCar" info={this.state.shopCount}/>
+      <Iphone id="iphone" className="phonelist" info={this.state.data.filter(
+        phone=> 'iPhone' === phone.category
+      )} onBuy={this.buy} />
+      <Huawei id="huawei" className="phonelist" info={this.state.data.filter(
+        phone=> 'HUAWEI' === phone.category
+      )} onBuy={this.buy} />
+    </div>
   }
 }
 
